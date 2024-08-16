@@ -185,15 +185,72 @@ class DoubleLinkedList {
         return;
     }
 
+    void swapFirstLast() {
+        if (length == 0) return;
+        int temp = head->value;
+        head->value = tail->value;
+        tail->value = temp;
+    }
+
+    void reverse() {
+        DoubleLinkedList* dll = new DoubleLinkedList(tail->value);
+        Node* next = tail->prev;
+        
+        while (next!=nullptr) {
+            dll->append(next->value);
+            next = next->prev;
+        }
+        
+        this->head = dll->head;
+        this->tail = dll->tail;
+    }
+
+    bool isPalindrome() {
+        Node* slow = head;
+        Node* fast = tail;
+        
+        while(slow != fast && fast->next!=slow) {
+            if (fast->value!=slow->value) {
+                return false;
+            }
+            slow = slow->next;
+            fast = fast->prev;
+        }
+        return true;
+    }
+
+    void swapPairs() {
+        if (length == 0 || length == 1) return;
+        DoubleLinkedList* dll = new DoubleLinkedList(head->next->value);
+        dll->append(head->value);
+        Node* next = head->next->next;
+
+        while (next!=nullptr)
+        {
+            if (next->next != nullptr) {
+                dll->append(next->next->value);
+            }
+            dll->append(next->value);
+            if (next->next != nullptr) {
+                next = next->next->next;
+            } else {
+                next = next->next;
+            }
+        }
+
+        this->head = dll->head;
+    }
+
 
 
 };
 
 int main() {
-    DoubleLinkedList dll(5);
-    dll.append(10);
-    dll.append(15);
+    DoubleLinkedList dll(1);
+    dll.append(2);
+    dll.append(3);
+    dll.append(4);
 
-    dll.insert(1, 100);
+    dll.swapPairs();
     cout << endl;
 }
