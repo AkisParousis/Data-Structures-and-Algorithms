@@ -85,8 +85,9 @@
 //         }
 
 // };
-
+#include <algorithm>
 #include <iostream>
+#include <stack>
 #include <vector>
 
 using namespace std;
@@ -131,22 +132,67 @@ class Stack {
                 stackVector.pop_back();
             }
         }
-  
+
+        string reverseString(const string& str) {
+            vector<char> temp = vector<char>();
+            for (int i = 0; i < str.size(); i++) {
+                temp.push_back(str[i]);
+            }
+            string reversed = "";
+            while (!temp.empty()) {
+                reversed += temp.back();
+                temp.pop_back();
+            }
+            return reversed;
+        }
+
+        bool isBalancedParentheses(const string& parentheses) {
+            for (auto it : parentheses) {
+                this->push(it);
+            }
+            int amount = 0;
+            while (!this->isEmpty()) {
+                int top = this->peek();
+                this->pop();
+                if (top == 40) {
+                    if (amount == 0) {
+                        return false;
+                    } else {
+                        amount--;
+                    }
+                } else {
+                    amount++;
+                    continue;
+                }
+            }
+            if (amount == 0) return true;
+        }
+
+        void sortStack(stack<int>& inputStack) {
+            vector<int> vec;
+
+            while (!inputStack.empty()) {
+                int top = inputStack.top();
+                vec.push_back(top);
+                inputStack.pop();
+            }
+
+            sort(vec.rbegin(), vec.rend());
+
+            for (int val : vec) {
+                inputStack.push(val);
+            }
+
+        }
 };
 
 int main() {
     Stack myStack;
-    myStack.push(1);
-    myStack.push(2);
-    myStack.push(3);
-    myStack.push(4);
-    myStack.push(5);
-    myStack.pop();
-    myStack.pop();
-    myStack.pop();
-    myStack.pop();
-    myStack.printStack();
-    cout << "Size: " << myStack.size() << endl;
-    cout << "Peek: " << myStack.peek() << endl;
+    stack<int> intStack;
+    intStack.push(-3);
+    intStack.push(1);
+    intStack.push(5);
+    intStack.push(-1);
+    myStack.sortStack(intStack);
     return 0;
 }
