@@ -1,4 +1,5 @@
 #include <iostream>
+#include <queue>
 
 using namespace std;
 
@@ -80,6 +81,59 @@ class BinarySearchTree {
                 }
             }
             return false;
+        }
+
+        void BFS() {
+		    queue<Node*> q;
+		    Node* currentNode = root;
+		    
+		    if (currentNode != nullptr) q.push(root);
+		    
+		    while (currentNode != nullptr) {
+		        if (currentNode->left != nullptr) {
+		            q.push(currentNode->left);
+		        }
+		        if (currentNode->right != nullptr) {
+		            q.push(currentNode->right);
+		        }
+		        cout << q.front()->value << " ";
+		        q.pop();
+		        if (!q.empty()) {
+		            currentNode = q.front();
+		        } else {
+		            currentNode = nullptr;
+		        }
+		    }
+		}
+
+        void DFSPreOrder(Node* currentNode) {
+            if (currentNode->left != nullptr) {
+                DFSPreOrder(currentNode->left);
+            }
+            if (currentNode->right != nullptr) {
+                DFSPreOrder(currentNode->right);
+            }
+            cout << currentNode->value << " ";
+        }
+
+        void DFSPostOrder(Node* currentNode) {
+            if (currentNode->left != nullptr) {
+                DFSPostOrder(currentNode->left);
+            }
+            if (currentNode->right != nullptr) {
+                DFSPostOrder(currentNode->right);
+            }
+            cout << currentNode->value << " ";
+        }
+
+        void DFSInOrder(Node* currentNode) {
+            if (currentNode->left != nullptr) {
+                DFSInOrder(currentNode->left);
+            }
+            cout << currentNode->value << " ";
+            if (currentNode->right != nullptr) {
+                DFSInOrder(currentNode->right);
+            }
         }
 };
 
