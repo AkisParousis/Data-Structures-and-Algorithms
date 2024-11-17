@@ -17,6 +17,7 @@ class Node {
 class LinkedList {
     private:
         Node* head;
+        Node* tail;
         int length;
         
     public:
@@ -204,6 +205,25 @@ class LinkedList {
             }
             
             this->head = start->head;
+        }
+
+        Node* findKthFromEnd(int k) {
+            Node* slow = head;
+            Node* fast = head;
+            
+            for (int i=0; i<k-1; i++){
+                if (fast == tail) {
+                    return nullptr;
+                }
+                fast = fast->next;
+            }
+            
+            while (fast!=tail){
+                fast = fast->next;
+                slow = slow->next;
+            }
+            
+            return slow;
         }
 
 };
